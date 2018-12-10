@@ -107,3 +107,11 @@ router.put('/:id/update', function(req, res, next) {
     }
 });
 
+router.delete('/:id/delete', function(req, res, next) {
+    Fleet.findByIdAndRemove(req.params.id, function (err) {
+        if (err) return next(err);
+        res.send('Deleted successfully!');
+    })
+});
+
+module.exports = router;
