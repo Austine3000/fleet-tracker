@@ -52,3 +52,11 @@ router.get('/:id', function(req, res, next) {
             res.json({ contact: single_fleet });
         });
 });
+
+router.get('/', function(req, res, next) {
+    Fleet.find({})
+        .exec(function (err, list_fleets) {
+            if(err) { return next(err); }
+            res.json({ contact: list_fleets });
+        })
+})
