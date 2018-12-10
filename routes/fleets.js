@@ -44,3 +44,11 @@ router.post('/create', function(req, res, next) {
             });
     }
 });
+
+router.get('/:id', function(req, res, next) {
+    Fleet.findById(req.params.id)
+        .exec(function (err, single_fleet) {
+            if (err) { return next(err); }
+            res.json({ contact: single_fleet });
+        });
+});
