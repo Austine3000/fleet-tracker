@@ -51,11 +51,11 @@ describe('Fleets', () => {
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
-            res.body.should.have.property('message').eql('Fleet successfully added!');
-            res.body.book.should.have.property('title');
-            res.body.book.should.have.property('author');
-            res.body.book.should.have.property('pages');
-            res.body.book.should.have.property('year');
+            res.body.book.should.have.property('make');
+            res.body.book.should.have.property('model');
+            res.body.book.should.have.property('prod_year');
+            res.body.book.should.have.property('plate_number');
+            res.body.book.should.have.property('category');
         done();
           });
     });
@@ -75,9 +75,9 @@ describe('Fleets', () => {
             "category": "TRUCK"
         });
         fleet.save((err, fleet) => {
-            chai.request(server)
+            chai.request(app)
           .get('/fleets/' + fleet.id)
-          .send(book)
+          .send(fleet)
           .end((err, res) => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');
@@ -106,7 +106,7 @@ describe('Fleets', () => {
             "category": "TRUCK"
         })
         fleet.save((err, fleet) => {
-              chai.request(server)
+              chai.request(app)
               .put(`/fleets/${fleet.id}/update`)
               .send({
                 "make": "Tata",
@@ -129,7 +129,7 @@ describe('Fleets', () => {
   * Test the /DELETE/:id route
   */
  describe('/DELETE/:id Fleet', () => {
-    it('it should DELETE a book given the id', (done) => {
+    it('it should DELETE a fleet given the id', (done) => {
         let fleet = new Fleet({
             "make": "Tata",
             "model": "RT-345",
@@ -137,8 +137,8 @@ describe('Fleets', () => {
             "plate_number": "MVBG-34897",
             "category": "CAR"
         })
-        book.save((err, fleet) => {
-              chai.request(server)
+        fleet.save((err, fleet) => {
+              chai.request(app)
               .delete(`/fleets/${fleet.id}/delete`)
               .end((err, res) => {
                     res.should.have.status(200);
