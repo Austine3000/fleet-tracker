@@ -57,7 +57,7 @@ router.get('/', function(req, res, next) {
     Fleet.find({})
         .exec(function (err, list_fleets) {
             if(err) { return next(err); }
-            res.json({ contact: list_fleets });
+            res.json(list_fleets);
         })
 });
 
@@ -110,7 +110,7 @@ router.put('/:id/update', function(req, res, next) {
 router.delete('/:id/delete', function(req, res, next) {
     Fleet.findByIdAndRemove(req.params.id, function (err) {
         if (err) return next(err);
-        res.send('Deleted successfully!');
+        res.send({message: 'Deleted successfully!'});
     })
 });
 
